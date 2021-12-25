@@ -1,0 +1,23 @@
+%dw 2.0
+
+type auto_fc9bea25_4674_4bd9_a383_10ac19fa44d9_Input_Attributes = {|
+  clientCertificate?: {|
+    publicKey?: {|  |}, 
+    "type"?: String, 
+    encoded?: Binary
+  |}, 
+  headers: {|  |}, 
+  listenerPath: String, 
+  method: String, 
+  queryParams: {|  |}, 
+  queryString: String, 
+  relativePath: String, 
+  remoteAddress: String, 
+  requestPath: String, 
+  requestUri: String, 
+  scheme: String, 
+  uriParams: {| OrderID: String |}, 
+  version: String, 
+  localAddress: String
+|}
+

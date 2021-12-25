@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="685cc9fe-11a3-4f8f-9c21-0134cb203b81" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="getAccounts" doc:id="8997ed96-e323-447e-a374-62127a372d82" >
+		<http:listener doc:name="Listener" doc:id="fcb45215-ebeb-4ace-a023-522d659c6915" path="/getaccounts" config-ref="HTTP_Listener_config"/>
+		<flow-ref doc:name="Flow Reference" doc:id="f227b999-d493-4b0b-800b-bfea23513cdd" name="get:\customers:batch-45-g13-customers-api-config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="e9172e5b-4cc4-49de-9f27-1da3f87b1319" message="#[payload]"/>
+	</flow>
+	<flow name="getAccountsByID" doc:id="5b0c4aab-33fd-48c2-bb6d-13cde3c406af" >
+		<http:listener doc:name="Listener" doc:id="43d3742a-5da2-4e8c-acb3-f72b4e8d2d76" path="/getAccountsByID/{customerID}" config-ref="HTTP_Listener_config"/>
+		<flow-ref doc:name="Flow Reference" doc:id="c2e3b382-07d0-439f-8f28-3442e1c2a35f" name="get:\customers\(customerID):batch-45-g13-customers-api-config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="69435f50-7183-40ab-aa1e-a0c84723efbf" message="#[payload]"/>
+	</flow>
+	<flow name="getOrders" doc:id="8491430f-0255-402d-a898-1278c0302947" >
+		<http:listener doc:name="Listener" doc:id="9d80950c-7242-4e57-964b-5115f658f1ff" path="/getorders" config-ref="HTTP_Listener_config"/>
+		<flow-ref doc:name="Flow Reference" doc:id="531eec7f-763e-48a2-99b8-75750df82c8b" name="get:\orders:batch-45-g13-customers-api-config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="4d4499ac-998d-4d15-a4ed-9b812faee1f5" message="#[payload]"/>
+	</flow>
+	<flow name="postOrder" doc:id="0f43cc5a-1b62-4ad5-a2b4-c63e9a1d8eeb" >
+		<http:listener doc:name="Listener" doc:id="df630c76-a413-4aea-b74c-753b760d5e34" path="/postorder" config-ref="HTTP_Listener_config"/>
+		<flow-ref doc:name="Flow Reference" doc:id="031e5888-30c6-41bd-8500-0fc25ae61f76" name="post:\orders:application\json:batch-45-g13-customers-api-config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="dd2b3697-9efd-491e-9836-ae76134b92ca" message="#[payload]"/>
+	</flow>
+	<flow name="getaddress" doc:id="d7543b1b-3950-4b46-887f-802db60a768a" >
+		<http:listener doc:name="Listener" doc:id="18628ba4-0b63-4466-ba98-0d4a0228a9cc" path="/getaddress" config-ref="HTTP_Listener_config"/>
+		<flow-ref doc:name="Flow Reference" doc:id="803e17d0-afe0-46d3-ad29-448da26f45ac" name="get:\customersAddress:batch-45-g13-customers-api-config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="3b6d72ac-46f7-4852-ac7e-76b782580e79" message="#[payload]"/>
+	</flow>
+	<flow name="getpayment" doc:id="88ecb4a7-4d8a-427e-8fe3-1e4604e30fcd" >
+		<http:listener doc:name="Listener" doc:id="e99ded25-79fb-4820-88b2-0fc4496ec617" path="/getpayment/{customerID}" config-ref="HTTP_Listener_config"/>
+		<flow-ref doc:name="Flow Reference" doc:id="71960ab2-61f4-4d43-9233-1ddc02ec483c" name="get:\payments\(customerID):batch-45-g13-customers-api-config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="d1774bd6-f422-47ce-b1c2-89eaded3d8d9" message="#[payload]"/>
+	</flow>
+	<flow name="getOrdersByID" doc:id="474ec9b3-c75c-400f-ba0f-eddd01345701" >
+		<http:listener doc:name="Listener" doc:id="8bb95803-f093-4143-ad7f-3725b830249f" config-ref="HTTP_Listener_config" path="/getorders/{OrderID}"/>
+		<flow-ref doc:name="Flow Reference" doc:id="a13138c0-cf67-4042-8cd6-effd4c1f7834" name="get:\orders\(OrderID):batch-45-g13-customers-api-config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="55a9dea2-2410-4a6e-8505-1893d0fdca59" message="#[payload]"/>
+	</flow>
+	<flow name="deletecustomerbyID" doc:id="963a4431-1da1-4b6d-ae00-3f2db3fd0622" >
+		<http:listener doc:name="Listener" doc:id="2b8d31a1-9336-418c-b1e6-911c49e5c6b9" config-ref="HTTP_Listener_config" path="/deleteaccountbyID/{customerID}"/>
+		<flow-ref doc:name="Flow Reference" doc:id="ae445784-0422-456b-8608-c8f1a7fea0c2" name="delete:\customers\(customerID):batch-45-g13-customers-api-config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="e7cae3de-ffcc-4fd0-87ee-85cb9af47257" message="#[payload]"/>
+	</flow>
+	<flow name="putorderByID" doc:id="b0ddb7db-5927-4bb6-aa61-231263f3e7aa" >
+		<http:listener doc:name="Listener" doc:id="024865dd-da79-46e3-945e-46d7c57f0735" config-ref="HTTP_Listener_config" path="/putorderbyid"/>
+		<flow-ref doc:name="Flow Reference" doc:id="811918cc-c79d-4ad8-ac36-8a9a6b4a8196" name="put:\orders\(OrderID):application\json:batch-45-g13-customers-api-config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="fc61d14b-c06b-404c-a07b-07566efdad11" message="#[payload]"/>
+	</flow>
+	<flow name="postcustomeraddress" doc:id="516d7b6e-59c6-4489-9989-8813aebbccbb" >
+		<http:listener doc:name="Listener" doc:id="f0dc31ac-39c6-4f86-904c-c330f793f707" config-ref="HTTP_Listener_config" path="/postcustaddress"/>
+		<flow-ref doc:name="Flow Reference" doc:id="e3088b55-221c-45e5-ae8f-7154bca3155f" name="post:\customersAddress:application\json:batch-45-g13-customers-api-config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="37a9cc96-91fb-4bb3-b307-ae3fd93efa9c" message="#[payload]"/>
+	</flow>
+	<flow name="postcustomers" doc:id="ee431df8-f33e-40f4-b8ed-ee5c98af4b02" >
+		<http:listener doc:name="Listener" doc:id="416dff40-8959-4361-b0c2-22efdb3aed9b" config-ref="HTTP_Listener_config" path="/postcustomers"/>
+		<flow-ref doc:name="Flow Reference" doc:id="19c78198-8d84-4d0e-b372-160356b36cbe" name="post:\customers:application\json:batch-45-g13-customers-api-config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="e1bb6b6b-e8c0-44ca-85f3-3384ba0c5cbd" message="#[payload]"/>
+	</flow>
+	<flow name="postpayment" doc:id="f211ae7d-1a96-4b98-aa17-21844a5c90bd" >
+		<http:listener doc:name="Listener" doc:id="9560b372-78cf-4116-ad0d-61acb126dec3" config-ref="HTTP_Listener_config" path="/postpayment"/>
+		<flow-ref doc:name="Flow Reference" doc:id="a9086d23-f268-4b87-af7f-f8f56108b4f0" name="post:\payments:application\json:batch-45-g13-customers-api-config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="69ac933d-b94d-4d8e-8d5c-c99e73413e22" message="#[payload]"/>
+	</flow>
+	<flow name="putcustaddressbyid" doc:id="79dff067-e0f8-4d93-8216-2dc831c3023e" >
+		<http:listener doc:name="Listener" doc:id="ef9e659f-249a-4999-9ea3-b835864552cb" config-ref="HTTP_Listener_config" path="/putcustaddressbyid"/>
+		<flow-ref doc:name="Flow Reference" doc:id="3664d67c-342e-4e60-b536-e60e2fd61ff4" name="put:\customersAddress\(customerID):application\json:batch-45-g13-customers-api-config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="3d7d446f-e6e7-41ef-b59d-762096a6c644" message="#[payload]"/>
+	</flow>
+	<flow name="putcustomersbyId" doc:id="2cef6451-ed67-4317-8673-ba2540a56b85" >
+		<http:listener doc:name="Listener" doc:id="50b1956c-2b98-4aa3-af71-f6b3453d4498" config-ref="HTTP_Listener_config" path="/putcustomersbyId"/>
+		<flow-ref doc:name="Flow Reference" doc:id="41fbc5f6-3c19-4575-bc21-431d1ba2a986" name="put:\customers\(customerID):application\json:batch-45-g13-customers-api-config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="5631e3d3-b653-4e2e-a8f0-411d0faf468c" message="#[payload]"/>
+	</flow>
+	<flow name="ImplementationFlow" doc:id="f45de1c6-3a90-4d75-9f04-6a5640024f7a" >
+		<http:listener doc:name="Listener" doc:id="c70c380e-8f93-4684-8094-2009586eb7b4" config-ref="HTTP_Listener_config" path="/test"/>
+		<http:request method="GET" doc:name="Request" doc:id="9eda52c5-b5ff-4519-a0c1-255c804b1e7d" config-ref="HTTP_Request_configuration1" path="/accountId">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"Name" : "Value"
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+</mule>
